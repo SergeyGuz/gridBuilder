@@ -481,7 +481,7 @@ export default {
   },
   computed: {
     fieldList: function() {
-      return Object.keys(this.dataSource[0]);
+      return this.getDeepKeys(this.dataSource[0]);
     }
   },
   mounted () {
@@ -531,7 +531,7 @@ export default {
   },
   methods: {
     myShow() {
-      console.log(this.myGrid.option());
+      console.log(this.getDeepKeys(this.sales[0]));
     },
     findItemByKey(items, key) {
       for(let i = 0; i < items.length; i++) {
@@ -709,7 +709,7 @@ export default {
       this.myForm2.option('visible',  !this.myForm2.option('visible'));
     },
     formFieldDataChanged(e) {
-      if (this.selectionColumn !== null && e.component === this.myForm2 && this.myGrid.columnOption(this.selectionColumn.name, e.dataField) != e.value) {
+      if (this.selectionColumn !== null && e.component === this.myForm2 && this.myGrid.columnOption(this.selectionColumn.name, e.dataField) !== e.value) {
         console.log('column - '+ e.dataField + ' = '+e.value);
         this.findItemByKey(this.myColumns, this.selectionColumn.name)[e.dataField] = e.value;
         if (e.dataField === 'caption') {this.findItemByKey(this.myTreeColumns, this.selectionColumn.name)[e.dataField] = e.value}
@@ -721,7 +721,29 @@ export default {
         this.myGrid.option(e.dataField, e.value);
         this.myGrid.repaint();
       }
-    }
+    },
+    getDeepKeys(obj) {
+      let keys = [];
+      for(let key in obj) {
+        if(typeof obj[key] === "object" && !Array.isArray(obj[key])) {
+          let subkeys = this.getDeepKeys(obj[key]);
+          keys = keys.concat(subkeys.map(function(subkey) {
+            return key + "." + subkey;
+          }));
+        } else if(Array.isArray(obj[key])) {
+          // for(let i=0;i<obj[key].length;i++){
+          //   let subkeys = this.getDeepKeys(obj[key][i]);
+          //   keys = keys.concat(subkeys.map(function(subkey) {
+          //     return key + "[" + i + "]" + "." + subkey;
+          //   }));
+          // }
+          keys.push(key);
+        } else {
+          keys.push(key);
+        }
+      }
+      return keys;
+    },
   }
 };
 </script>
