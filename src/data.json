@@ -1,0 +1,752 @@
+[
+    'id',
+    'name',
+    'version',
+    'type',
+    'content',
+    'note',
+    'zkPUOrgstructureLink.id',
+    'zkPUOrgstructureLink.version',
+    'zkPUOrgstructureLink.type',
+    'zkPUOrgstructureLink.name',
+    'planEventStatusLink.id',
+    'planEventStatusLink.version',
+    'planEventStatusLink.type',
+    'planEventStatusLink.name',
+    'oudPlanningPeriodLink.id',
+    'oudPlanningPeriodLink.version',
+    'oudPlanningPeriodLink.type',
+    'oudPlanningPeriodLink.name',
+    'oudPlanningPeriodLink.reportingYear',
+    'oudPlanningPeriodLink.planPeriodAllLink.id',
+    'oudPlanningPeriodLink.planPeriodAllLink.version',
+    'oudPlanningPeriodLink.planPeriodAllLink.type',
+    'oudPlanningPeriodLink.planPeriodAllLink.name',
+    'oudPlanningPeriodLink.oudPlanningAsignedToLink.id',
+    'oudPlanningPeriodLink.oudPlanningAsignedToLink.version',
+    'oudPlanningPeriodLink.oudPlanningAsignedToLink.type',
+    'oudPlanningPeriodLink.oudPlanningAsignedToLink.name',
+    'oudPlanningPeriodLink.oudPlanningAsignedToLink.onControlOrNot',
+    'oudPlanningPeriodLink.oudPlanningAsignedToLink.personnelZKVSNotUniqLink.id',
+    'oudPlanningPeriodLink.oudPlanningAsignedToLink.personnelZKVSNotUniqLink.version',
+    'oudPlanningPeriodLink.oudPlanningAsignedToLink.personnelZKVSNotUniqLink.type',
+    'oudPlanningPeriodLink.oudPlanningAsignedToLink.personnelZKVSNotUniqLink.lastName',
+    'oudPlanningPeriodLink.oudPlanningAsignedToLink.personnelZKVSNotUniqLink.firstName',
+    'oudPlanningPeriodLink.oudPlanningAsignedToLink.personnelZKVSNotUniqLink.middleName',
+    'oudPlanningPeriodLink.oudPlanningAsignedToLink.zkPUOrgstructureLink.id',
+    'oudPlanningPeriodLink.oudPlanningAsignedToLink.zkPUOrgstructureLink.version',
+    'oudPlanningPeriodLink.oudPlanningAsignedToLink.zkPUOrgstructureLink.type',
+    'oudPlanningPeriodLink.oudPlanningAsignedToLink.zkPUOrgstructureLink.name'
+]
+
+{
+    $type: 'oudPlanningOffersEvents',
+    id,
+    name,
+    version,
+    type,
+    zkPUOrgstructureLink: {
+        id,
+        version,
+        type,
+        name
+    },
+    content,
+    note,
+    planEventStatusLink: {
+        id,
+        version,
+        type,
+        name
+    },
+    'oudPlanningPeriodLink: '{
+        id,
+        version,
+        type,
+        name,
+        planPeriodAllLink: {
+            id,
+            version,
+            type,
+            name
+        },
+        reportingYear,
+        oudPlanningAsignedToLink: {
+            id,
+            version,
+            type,
+            name,
+            personnelZKVSNotUniqLink: {
+                id,
+                version,
+                type,
+                lastName,
+                firstName,
+                middleName
+            },
+            zkPUOrgstructureLink: {
+                id,
+                version,
+                type,
+                name
+            },
+            onControlOrNot
+        }
+    },
+
+
+
+
+
+[
+    {
+        '"id":"ccbd18b3-8da7-4733-ba00-9de79a133600"',
+        '"name":null',
+        '"version":"2020-02-11T11:09:08.833Z"',
+        '"type":"022d3cf7-6c3e-4e79-88e2-c9612df1f801"',
+        '"dateTime":"2019-09-19T08:12:00Z"',
+        "ship":{
+            '"id":"e6c6a44b-61d6-4b42-8e55-263353e2b5ff"',
+            '"version":"2019-06-28T11:28:53.380Z"',
+            '"type":"dac4c525-cbd4-4942-ad89-5aefb6e8a6f9"',
+            '"name":"MINNA"',
+            '"shipName":"MINNA"',
+            '"shipKind":null',
+            '"shipFlag":null',
+            "shipOwner":null
+        '}',
+        '"smallShip":null',
+        '"districtRegistry":null',
+        "port":{
+            '"id":"e8e98712-e691-476d-be47-867d4fc20a18"',
+            '"version":"2019-01-10T14:31:31.691Z"',
+            '"type":"07a7f96d-efd1-48f1-8000-7d695c372204"',
+            "name":"Aalsmeerderbrug"
+        '}',
+        "kpmDocsLink":[
+            {
+                '"id":"f2eb7cc0-a9fb-4bf3-be9f-6d0e0936ed8b"',
+                '"version":"2019-09-19T11:12:45.039Z"',
+                '"type":"1d5bd027-c4c8-4022-a2ee-70fc518b2861"',
+                '"name":"123"',
+                '"docNumber":"123"',
+                '"inspector":null',
+                "docsNameKPM":{
+                    '"id":"91260978-2a0b-454c-adf0-670cc1f5d632"',
+                    '"version":"2018-06-15T09:02:27.871Z"',
+                    '"type":"04c7b50a-3e58-452d-bf83-fe26192aa52f"',
+                    "name":"Акт регистрации объемов добычи (вылова) водных биологических ресурсов и произведенной из них рыбной или иной продукции при перегрузке судном"
+                '}',
+                "kpmForcesAndFacilitiesLink":[
+                    {
+                        '"id":"10342670-2f9c-472a-99a8-32e99f1111f3"',
+                        '"version":"2019-09-17T11:24:29.123Z"',
+                        '"type":"15b424cf-da47-4ef3-b30c-93180a83c32e"',
+                        "name":"ИС"
+                    }
+                ']',
+                "orgFoivDepartment":{
+                    '"id":"2148040d-3cc6-4318-86bd-30acca9979d0"',
+                    '"version":"2020-05-21T18:49:25.285Z"',
+                    '"type":"257d48a9-d4e4-43ab-91ca-b90ab5fd4a40"',
+                    "name":"Аппарат ПУ по ЗАР"
+                '}',
+                "subdivisionInteractOne":null
+            '}',
+            {
+                '"id":"6bffe15a-f6d2-4e1b-abb2-7ecb0c0146a1"',
+                '"version":"2019-09-19T11:12:45.052Z"',
+                '"type":"1d5bd027-c4c8-4022-a2ee-70fc518b2861"',
+                '"name":"1231"',
+                '"docNumber":"123"',
+                '"inspector":null',
+                "docsNameKPM":{
+                    '"id":"91260978-2a0b-454c-adf0-670cc1f5d632"',
+                    '"version":"2018-06-15T09:02:27.871Z"',
+                    '"type":"04c7b50a-3e58-452d-bf83-fe26192aa52f"',
+                    "name":"Акт регистрации объемов добычи (вылова) водных биологических ресурсов и произведенной из них рыбной или иной продукции при перегрузке судном"
+                '}',
+                "kpmForcesAndFacilitiesLink":[
+                    {
+                        '"id":"10342670-2f9c-472a-99a8-32e99f1111f3"',
+                        '"version":"2019-09-17T11:24:29.123Z"',
+                        '"type":"15b424cf-da47-4ef3-b30c-93180a83c32e"',
+                        "name":"ИС"
+                    }
+                ']',
+                "orgFoivDepartment":{
+                    '"id":"2148040d-3cc6-4318-86bd-30acca9979d0"',
+                    '"version":"2020-05-21T18:49:25.285Z"',
+                    '"type":"257d48a9-d4e4-43ab-91ca-b90ab5fd4a40"',
+                    "name":"Аппарат ПУ по ЗАР"
+                '}',
+                "subdivisionInteractOne":null
+            }
+        ']',
+        "actShipWatch":{
+            '"id":"81c07d6f-7bc7-475a-a9c9-24724b199d38"',
+            '"version":"2019-09-19T12:30:40.286Z"',
+            '"type":"2b287cff-a1dd-4b42-8452-42a01080025b"',
+            '"name":null',
+            "docMistakes":"11111"
+        }
+    '}',
+    {
+        '"id":"3e1972c2-8d25-4e2c-bc86-40689b146edf"',
+        '"name":null',
+        '"version":"2019-09-19T12:30:17.009Z"',
+        '"type":"022d3cf7-6c3e-4e79-88e2-c9612df1f801"',
+        '"dateTime":"2019-09-19T09:28:00Z"',
+        "ship":{
+            '"id":"203a8c60-7bd2-42c9-9742-53928f67551a"',
+            '"version":"2019-05-27T12:22:53.917Z"',
+            '"type":"dac4c525-cbd4-4942-ad89-5aefb6e8a6f9"',
+            '"name":"Батайск"',
+            '"shipName":"Батайск"',
+            "shipKind":{
+                '"id":"97e89e7e-3708-47b5-942a-da9e035b488b"',
+                '"version":"2018-10-22T12:42:59.115Z"',
+                '"type":"91d5f27c-a87e-4038-a1d8-da53a2588b5e"',
+                "name":"Рыболовное судно"
+            '}',
+            "shipFlag":{
+                '"id":"65b596ec-120a-4fa9-b1f9-fcfc1a051e0a"',
+                '"version":"2019-01-24T10:43:04.051Z"',
+                '"type":"d0d3d766-360c-4f51-a0d1-78145f40c9b4"',
+                "name":"Российская Федерация"
+            '}',
+            "shipOwner":{
+                '"id":"305d784f-70ed-48ec-9798-e8d0916aa6cf"',
+                '"version":"2018-01-24T09:59:23.093Z"',
+                '"type":"268f0266-ad7d-4c1e-9ffb-1bb0b45c9383"',
+                "name":"ООО \"Союзвосток\""
+            }
+        '}',
+        '"smallShip":null',
+        '"districtRegistry":null',
+        '"port":null',
+        "kpmDocsLink":[
+            {
+                '"id":"17881e13-5a14-4cea-9545-6e7f034aa1b0"',
+                '"version":"2019-09-19T12:29:19.034Z"',
+                '"type":"1d5bd027-c4c8-4022-a2ee-70fc518b2861"',
+                '"name":"123"',
+                '"docNumber":"123111"',
+                '"inspector":null',
+                "docsNameKPM":{
+                    '"id":"d140bde3-b654-4871-a21a-7ac83c8cec7b"',
+                    '"version":"2017-12-06T10:56:04.301Z"',
+                    '"type":"04c7b50a-3e58-452d-bf83-fe26192aa52f"',
+                    "name":"Акт регистрации объемов добычи (вылова) водных биологических ресурсов и произведенной из них рыбной или иной продукции при выгрузке в морском порту (месте доставки)"
+                '}',
+                "kpmForcesAndFacilitiesLink":[
+                    {
+                        '"id":"10342670-2f9c-472a-99a8-32e99f1111f3"',
+                        '"version":"2019-09-17T11:24:29.123Z"',
+                        '"type":"15b424cf-da47-4ef3-b30c-93180a83c32e"',
+                        "name":"ИС"
+                    }
+                ']',
+                "orgFoivDepartment":{
+                    '"id":"2148040d-3cc6-4318-86bd-30acca9979d0"',
+                    '"version":"2020-05-21T18:49:25.285Z"',
+                    '"type":"257d48a9-d4e4-43ab-91ca-b90ab5fd4a40"',
+                    "name":"Аппарат ПУ по ЗАР"
+                '}',
+                "subdivisionInteractOne":null
+            }
+        ']',
+        "actShipWatch":{
+            '"id":"fb49f8ab-32cb-4d6a-892a-db67891a956e"',
+            '"version":"2019-09-19T12:30:17.012Z"',
+            '"type":"2b287cff-a1dd-4b42-8452-42a01080025b"',
+            '"name":null',
+            "docMistakes":"+"
+        }
+    '}',
+    {
+        '"id":"535257d2-fe76-4b82-9535-c690d400a219"',
+        '"name":null',
+        '"version":"2019-09-26T16:06:40.432Z"',
+        '"type":"022d3cf7-6c3e-4e79-88e2-c9612df1f801"',
+        '"dateTime":"2019-09-17T09:04:00Z"',
+        "ship":{
+            '"id":"cd5e5aac-c5d5-4913-8267-fc07da78441c"',
+            '"version":"2019-06-27T10:36:56.381Z"',
+            '"type":"dac4c525-cbd4-4942-ad89-5aefb6e8a6f9"',
+            '"name":"ЯНТАРЬ"',
+            '"shipName":"ЯНТАРЬ"',
+            "shipKind":{
+                '"id":"97e89e7e-3708-47b5-942a-da9e035b488b"',
+                '"version":"2018-10-22T12:42:59.115Z"',
+                '"type":"91d5f27c-a87e-4038-a1d8-da53a2588b5e"',
+                "name":"Рыболовное судно"
+            '}',
+            "shipFlag":{
+                '"id":"65b596ec-120a-4fa9-b1f9-fcfc1a051e0a"',
+                '"version":"2019-01-24T10:43:04.051Z"',
+                '"type":"d0d3d766-360c-4f51-a0d1-78145f40c9b4"',
+                "name":"Российская Федерация"
+            '}',
+            "shipOwner":{
+                '"id":"ad2842ec-8ade-4dc5-84c5-1fa9daa0583c"',
+                '"version":"2016-11-14T12:58:08.567Z"',
+                '"type":"268f0266-ad7d-4c1e-9ffb-1bb0b45c9383"',
+                "name":"ООО \"Атлант\""
+            }
+        '}',
+        '"smallShip":null',
+        '"districtRegistry":null',
+        '"port":null',
+        "kpmDocsLink":[
+            {
+                '"id":"1e2bff0b-a960-40a5-aceb-4f499e9bf76b"',
+                '"version":"2019-09-18T16:10:58.544Z"',
+                '"type":"1d5bd027-c4c8-4022-a2ee-70fc518b2861"',
+                '"name":"123"',
+                '"docNumber":null',
+                '"inspector":null',
+                "docsNameKPM":{
+                    '"id":"80f3886f-bb68-4bde-8d63-3267092690fd"',
+                    '"version":"2018-09-10T16:04:42.058Z"',
+                    '"type":"04c7b50a-3e58-452d-bf83-fe26192aa52f"',
+                    "name":"Акт осмотра рыбопромыслового участка"
+                '}',
+                "kpmForcesAndFacilitiesLink":[
+                    {
+                        '"id":"10342670-2f9c-472a-99a8-32e99f1111f3"',
+                        '"version":"2019-09-17T11:24:29.123Z"',
+                        '"type":"15b424cf-da47-4ef3-b30c-93180a83c32e"',
+                        "name":"ИС"
+                    }
+                ']',
+                "orgFoivDepartment":{
+                    '"id":"f67357c9-d966-4d97-b8ea-91a8913d0bb6"',
+                    '"version":"2019-09-18T16:10:58.550Z"',
+                    '"type":"257d48a9-d4e4-43ab-91ca-b90ab5fd4a40"',
+                    "name":"Аппарат ПУ"
+                '}',
+                "subdivisionInteractOne":null
+            }
+        ']',
+        "actShipWatch":{
+            '"id":"3d10ea1f-cb9e-4553-be19-ca0ae4b4a304"',
+            '"version":"2019-09-26T16:06:40.435Z"',
+            '"type":"2b287cff-a1dd-4b42-8452-42a01080025b"',
+            '"name":null',
+            "docMistakes":"Вылов"
+        }
+    '}',
+    {
+        '"id":"9e6d350f-477c-42ab-9b10-153331fced22"',
+        '"name":null',
+        '"version":"2021-03-26T17:09:10.981Z"',
+        '"type":"022d3cf7-6c3e-4e79-88e2-c9612df1f801"',
+        '"dateTime":"2020-09-01T09:26:00Z"',
+        '"ship":null',
+        "smallShip":{
+            '"id":"ff471a8e-7f46-4b93-aaa3-ffc4e8e7f046"',
+            '"version":"2020-09-02T14:52:33.318Z"',
+            '"type":"45d60fd0-bed3-4abf-849d-204f219741be"',
+            '"name":null',
+            '"factoryNumber":"940209"',
+            "model":"ПРОГРЕСС 2 М"
+        '}',
+        "districtRegistry":{
+            '"id":"fcfad625-6aa4-4a24-8527-42721f710bfa"',
+            '"version":"2020-12-07T14:12:51.690Z"',
+            '"type":"e32f01c9-0429-496c-97f9-7217b39ecccf"',
+            '"number":"0109"',
+            "name":"Баренцево море (воды вокруг о. Медвежий)"
+        '}',
+        '"port":null',
+        "kpmDocsLink":[
+            {
+                '"id":"caaadf3d-9025-43f7-bf24-81ba5afde4c5"',
+                '"version":"2020-12-10T12:24:22.243Z"',
+                '"type":"1d5bd027-c4c8-4022-a2ee-70fc518b2861"',
+                '"name":"123"',
+                '"docNumber":"123"',
+                '"inspector":null',
+                "docsNameKPM":{
+                    '"id":"0b7a45ed-5c52-4ce9-8080-408814a4d96b"',
+                    '"version":"2017-11-08T10:37:08.878Z"',
+                    '"type":"04c7b50a-3e58-452d-bf83-fe26192aa52f"',
+                    "name":"Акт осмотра судна"
+                '}',
+                "kpmForcesAndFacilitiesLink":[
+                    {
+                        '"id":"10342670-2f9c-472a-99a8-32e99f1111f3"',
+                        '"version":"2019-09-17T11:24:29.123Z"',
+                        '"type":"15b424cf-da47-4ef3-b30c-93180a83c32e"',
+                        "name":"ИС"
+                    '}',
+                    {
+                        '"id":"c0e4f2cf-4d72-44b6-8aec-65892fdc6a43"',
+                        '"version":"2020-09-24T12:14:22.581Z"',
+                        '"type":"15b424cf-da47-4ef3-b30c-93180a83c32e"',
+                        "name":"Взаимодействующие ФОИВ"
+                    }
+                ']',
+                "orgFoivDepartment":{
+                    '"id":"d835fe28-ad2f-4bff-bf97-27c445a53ab4"',
+                    '"version":"2020-09-24T12:26:28.056Z"',
+                    '"type":"257d48a9-d4e4-43ab-91ca-b90ab5fd4a40"',
+                    "name":"Центральный аппарат пограничной службы"
+                '}',
+                "subdivisionInteractOne":{
+                    '"id":"a2ea18ce-6dee-4ef8-808c-e812a5f54a9d"',
+                    '"version":"2020-09-24T12:26:28.050Z"',
+                    '"type":"257d48a9-d4e4-43ab-91ca-b90ab5fd4a40"',
+                    "name":"Северный флот "
+                }
+            '}',
+            {
+                '"id":"7063956b-1cbb-42fd-b7cd-1ae22e7252e1"',
+                '"version":"2021-03-26T17:09:10.987Z"',
+                '"type":"1d5bd027-c4c8-4022-a2ee-70fc518b2861"',
+                '"name":null',
+                '"docNumber":"123"',
+                '"inspector":null',
+                "docsNameKPM":{
+                    '"id":"49b2b629-f2ea-4d07-a000-fd8281f1f2e9"',
+                    '"version":"2021-01-20T15:57:58.193Z"',
+                    '"type":"04c7b50a-3e58-452d-bf83-fe26192aa52f"',
+                    "name":"Акт осмотра рыбопромысловых бригад"
+                '}',
+                "kpmForcesAndFacilitiesLink":[
+                    {
+                        '"id":"4ef0882d-4c51-45bd-9693-1d9abbad73fd"',
+                        '"version":"2019-09-17T11:21:19.802Z"',
+                        '"type":"15b424cf-da47-4ef3-b30c-93180a83c32e"',
+                        "name":"ППК"
+                    '}',
+                    {
+                        '"id":"c1da7d97-99f1-4564-9558-38d0fe89316b"',
+                        '"version":"2019-09-17T11:20:29.283Z"',
+                        '"type":"15b424cf-da47-4ef3-b30c-93180a83c32e"',
+                        "name":"ПСКР"
+                    '}',
+                    {
+                        '"id":"10342670-2f9c-472a-99a8-32e99f1111f3"',
+                        '"version":"2019-09-17T11:24:29.123Z"',
+                        '"type":"15b424cf-da47-4ef3-b30c-93180a83c32e"',
+                        "name":"ИС"
+                    '}',
+                    {
+                        '"id":"77d365ad-a8dc-4c08-8c56-234fe9b549df"',
+                        '"version":"2019-09-17T11:23:10.860Z"',
+                        '"type":"15b424cf-da47-4ef3-b30c-93180a83c32e"',
+                        "name":"ПКО"
+                    '}',
+                    {
+                        '"id":"ad655053-4406-4906-a94f-5a8896972602"',
+                        '"version":"2019-09-17T11:23:57.794Z"',
+                        '"type":"15b424cf-da47-4ef3-b30c-93180a83c32e"',
+                        "name":"ПСКА"
+                    }
+                ']',
+                '"orgFoivDepartment":null',
+                "subdivisionInteractOne":null
+            }
+        ']',
+        "actShipWatch":{
+            '"id":"a7f4dd9a-a190-43cf-b1b5-a0d0b50d7f36"',
+            '"version":"2020-09-02T14:52:33.356Z"',
+            '"type":"2b287cff-a1dd-4b42-8452-42a01080025b"',
+            '"name":null',
+            "docMistakes":null
+        }
+    '}',
+    {
+        '"id":"2c0d8ce0-2eb3-43d0-94c5-95cdb598c933"',
+        '"name":null',
+        '"version":"2020-08-31T10:53:08.700Z"',
+        '"type":"022d3cf7-6c3e-4e79-88e2-c9612df1f801"',
+        '"dateTime":"2020-02-19T10:42:00Z"',
+        '"ship":null',
+        "smallShip":{
+            '"id":"4a3960ec-15a3-456c-b54e-d2a26f6c5e75"',
+            '"version":"2020-09-02T14:34:51.806Z"',
+            '"type":"45d60fd0-bed3-4abf-849d-204f219741be"',
+            '"name":null',
+            '"factoryNumber":"9999"',
+            "model":"лллл"
+        '}',
+        "districtRegistry":{
+            '"id":"fa7507cc-3e46-4d62-a642-a9b172dca2a6"',
+            '"version":"2020-02-26T13:46:52.544Z"',
+            '"type":"e32f01c9-0429-496c-97f9-7217b39ecccf"',
+            '"number":null',
+            "name":"г. Салехард"
+        '}',
+        "port":{
+            '"id":"20bc127a-bb94-4701-8fdf-e00289d13ab0"',
+            '"version":"2018-06-21T11:18:24.415Z"',
+            '"type":"07a7f96d-efd1-48f1-8000-7d695c372204"',
+            "name":"Aaiun"
+        '}',
+        "kpmDocsLink":[
+            {
+                '"id":"84237aeb-a6a0-4f5b-80df-1d0de68aadea"',
+                '"version":"2020-07-02T13:59:44.665Z"',
+                '"type":"1d5bd027-c4c8-4022-a2ee-70fc518b2861"',
+                '"name":"23"',
+                '"docNumber":"23"',
+                '"inspector":null',
+                "docsNameKPM":{
+                    '"id":"80f3886f-bb68-4bde-8d63-3267092690fd"',
+                    '"version":"2018-09-10T16:04:42.058Z"',
+                    '"type":"04c7b50a-3e58-452d-bf83-fe26192aa52f"',
+                    "name":"Акт осмотра рыбопромыслового участка"
+                '}',
+                "kpmForcesAndFacilitiesLink":[
+                    {
+                        '"id":"10342670-2f9c-472a-99a8-32e99f1111f3"',
+                        '"version":"2019-09-17T11:24:29.123Z"',
+                        '"type":"15b424cf-da47-4ef3-b30c-93180a83c32e"',
+                        "name":"ИС"
+                    }
+                ']',
+                "orgFoivDepartment":{
+                    '"id":"630073be-8f8e-4667-95e3-67848a00f6db"',
+                    '"version":"2020-10-14T16:17:07.065Z"',
+                    '"type":"257d48a9-d4e4-43ab-91ca-b90ab5fd4a40"',
+                    "name":"Территориальные органы Пограничной службы"
+                '}',
+                "subdivisionInteractOne":null
+            }
+        ']',
+        "actShipWatch":{
+            '"id":"afca4df7-b5a4-46c5-b8e3-a191c6fe5191"',
+            '"version":"2020-02-26T13:47:20.355Z"',
+            '"type":"2b287cff-a1dd-4b42-8452-42a01080025b"',
+            '"name":null',
+            "docMistakes":"123123"
+        }
+    '}',
+    {
+        '"id":"5ede24c2-eca4-4ea3-a0f3-ac5e8dd292fb"',
+        '"name":null',
+        '"version":"2020-08-31T10:52:05.283Z"',
+        '"type":"022d3cf7-6c3e-4e79-88e2-c9612df1f801"',
+        '"dateTime":"2020-08-20T12:28:00Z"',
+        '"ship":null',
+        '"smallShip":null',
+        "districtRegistry":{
+            '"id":"fcfad625-6aa4-4a24-8527-42721f710bfa"',
+            '"version":"2020-12-07T14:12:51.690Z"',
+            '"type":"e32f01c9-0429-496c-97f9-7217b39ecccf"',
+            '"number":"0109"',
+            "name":"Баренцево море (воды вокруг о. Медвежий)"
+        '}',
+        '"port":null',
+        "kpmDocsLink":[
+            {
+                '"id":"ef6c7018-73b4-4e19-93b0-cf4b1334cdd1"',
+                '"version":"2020-08-10T15:28:52.065Z"',
+                '"type":"1d5bd027-c4c8-4022-a2ee-70fc518b2861"',
+                '"name":null',
+                '"docNumber":"98"',
+                '"inspector":null',
+                "docsNameKPM":{
+                    '"id":"80f3886f-bb68-4bde-8d63-3267092690fd"',
+                    '"version":"2018-09-10T16:04:42.058Z"',
+                    '"type":"04c7b50a-3e58-452d-bf83-fe26192aa52f"',
+                    "name":"Акт осмотра рыбопромыслового участка"
+                '}',
+                '"kpmForcesAndFacilitiesLink":null',
+                '"orgFoivDepartment":null',
+                "subdivisionInteractOne":null
+            '}',
+            {
+                '"id":"7fd1e23a-2733-47d3-ba57-a05a13a14673"',
+                '"version":"2020-08-10T15:28:52.088Z"',
+                '"type":"1d5bd027-c4c8-4022-a2ee-70fc518b2861"',
+                '"name":null',
+                '"docNumber":"0"',
+                '"inspector":null',
+                "docsNameKPM":{
+                    '"id":"80f3886f-bb68-4bde-8d63-3267092690fd"',
+                    '"version":"2018-09-10T16:04:42.058Z"',
+                    '"type":"04c7b50a-3e58-452d-bf83-fe26192aa52f"',
+                    "name":"Акт осмотра рыбопромыслового участка"
+                '}',
+                '"kpmForcesAndFacilitiesLink":null',
+                '"orgFoivDepartment":null',
+                "subdivisionInteractOne":null
+            }
+        ']',
+        "actShipWatch":{
+            '"id":"0e87ac39-db76-44f4-991d-ad5da688634e"',
+            '"version":"2020-08-10T15:28:52.043Z"',
+            '"type":"2b287cff-a1dd-4b42-8452-42a01080025b"',
+            '"name":null',
+            "docMistakes":null
+        }
+    }
+]
+[
+'id',
+'name',
+'version',
+'type',
+'ship.id',
+'ship.version',
+'ship.type',
+'ship.name',
+'ship.shipName',
+'ship.shipKind.id',
+'ship.shipKind.version',
+'ship.shipKind.type',
+'ship.shipKind.name',
+'shipFlag.id',
+'shipFlag.version',
+'shipFlag.type',
+'shipFlag.name',
+'shipOwner.id',
+'shipOwner.version',
+'shipOwner.type',
+'shipOwner.name',
+'smallShip.id',
+'smallShip.version',
+'smallShip.type',
+'smallShip.name',
+'smallShip.factoryNumber',
+'smallShip.model',
+'dateTime',
+'districtRegistry.id',
+'districtRegistry.version',
+'districtRegistry.type',
+'districtRegistry.number',
+'districtRegistry.name',
+'port.id',
+'port.version',
+'port.type',
+'port.name',
+'kpmDocsLink.id',
+'kpmDocsLink.version',
+'kpmDocsLink.type',
+'kpmDocsLink.name',
+'kpmDocsLink.docNumber',
+'kpmDocsLink.docsNameKPM.id',
+'kpmDocsLink.docsNameKPM.version',
+'kpmDocsLink.docsNameKPM.type',
+'kpmDocsLink.docsNameKPM.name',
+'kpmDocsLink.kpmForcesAndFacilitiesLink.id',
+'kpmDocsLink.kpmForcesAndFacilitiesLink.version',
+'kpmDocsLink.kpmForcesAndFacilitiesLink.type',
+'kpmDocsLink.kpmForcesAndFacilitiesLink.name',
+'kpmDocsLink.orgFoivDepartment.id',
+'kpmDocsLink.orgFoivDepartment.version',
+'kpmDocsLink.orgFoivDepartment.type',
+'kpmDocsLink.orgFoivDepartment.name',
+'kpmDocsLink.subdivisionInteractOne.id',
+'kpmDocsLink.subdivisionInteractOne.version',
+'kpmDocsLink.subdivisionInteractOne.type',
+'kpmDocsLink.subdivisionInteractOne.name',
+'actShipWatch.id',
+'actShipWatch.version',
+'actShipWatch.type',
+'actShipWatch.name',
+actShipWatch.docMistakes
+]
+
+{
+    '$type: 'kpmShip'',
+    'id',
+    'name',
+    'version',
+    'type',
+    ship: {
+        'id',
+        'version',
+        'type',
+        'name',
+        'shipName',
+        shipKind: {
+            'id',
+            'version',
+            'type',
+            name
+        '}',
+        shipFlag: {
+            'id',
+            'version',
+            'type',
+            name
+        '}',
+        shipOwner: {
+            'id',
+            'version',
+            'type',
+            name
+        }
+    '}',
+    smallShip: {
+        'id',
+        'version',
+        'type',
+        'name',
+        'factoryNumber',
+        model
+    '}',
+    'dateTime',
+    districtRegistry: {
+        'id',
+        'version',
+        'type',
+        'number',
+        name
+    '}',
+    port: {
+        'id',
+        'version',
+        'type',
+        name
+    '}',
+    kpmDocsLink: {
+        'id',
+        'version',
+        'type',
+        'name',
+        'docNumber',
+        docsNameKPM: {
+            'id',
+            'version',
+            'type',
+            name
+        '}',
+        kpmForcesAndFacilitiesLink: {
+            'id',
+            'version',
+            'type',
+            name
+        '}',
+        orgFoivDepartment: {
+            'id',
+            'version',
+            'type',
+            name
+        '}',
+        subdivisionInteractOne: {
+            'id',
+            'version',
+            'type',
+            name
+        '}',
+        inspector
+    '}',
+    actShipWatch: {
+        'id',
+        'version',
+        'type',
+        'name',
+        docMistakes
+    '}',
+    $order: (
+    'asc(attribute('ship.shipName'))',
+    desc(attribute('version'))
+    ')',
+    $limit: 20
+}
