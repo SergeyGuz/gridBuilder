@@ -457,6 +457,17 @@
       </DxDataGrid>
     </div>
     </DxDrawer>
+<!--
+    <DxPopup
+        :width="600"
+        :height="400"
+        :title="Выберите колонки:"
+        :visible="popupVisible"
+    >
+
+    </DxPopup>
+-->
+
   </div>
 </template>
 <script>
