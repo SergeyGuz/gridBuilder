@@ -52,6 +52,9 @@ export default {
       default: ()=>[]
     }
   },
+  mounted () {
+    console.log(this.templateData.column);
+  },
   data() {
     return {
       dataSource: this.templateData.value,

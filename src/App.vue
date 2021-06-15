@@ -28,6 +28,12 @@
           widget="dxButton"
           :disabled="isNotColumnSelect"
       />
+      <ToolBarItem
+          :options="{ icon: 'inserttable', onClick: () => this.columnsFromDatasource(this.myGrid)}"
+          location="before"
+          widget="dxButton"
+          :disabled="isColumns"
+      />
     </DxToolbar>
     <DxDrawer
         :opened= "openState"
@@ -45,20 +51,6 @@
             @click="showFormSetup"
         />
         <div class="form-container2">
-          <DxTreeView
-              ref="treeview"
-              :data-source = "myTreeColumns"
-              selection-mode="single"
-              :select-by-click="true"
-              show-check-boxes-mode="none"
-              width="100%"
-              key-expr="name"
-              items-expr="columns"
-              display-expr="caption"
-              dataStructure="tree"
-              no-data-text="Колонки отсутствуют"
-              @item-click="selectItem"
-          />
           <DxForm
               ref="form3"
               :col-count="1"
@@ -67,6 +59,8 @@
               @field-data-changed="formFieldDataChanged"
           >
             <DxTagBox :visible='false'/>
+            <DxItem item-type="simple" data-field="dataSourceList" editor-type='dxSelectBox' :label= "{text: 'Источник данных' }"
+                    :editor-options= "{ onValueChanged: (e) => { dsChange(e.value) }, searchEnabled: true,items: dsList}"/>
             <DxItem item-type="simple" data-field="accessKey" editor-type="dxTextBox"/>
 <!--              <DxItem item-type="simple" data-field="accessKey" editor-type="dxTextBox" :label= "{text: 'Проба'}"/>-->
             <DxItem item-type="simple" data-field="activeStateEnabled" editor-type="dxCheckBox"/>
@@ -94,7 +88,7 @@
             <DxItem item-type="simple" data-field="columnMinWidth" editor-type="dxNumberBox"/>
             <DxItem item-type="simple" data-field="columnResizingMode" editor-type='dxSelectBox' :editor-options=" {items: ['nextColumn', 'widget']}"/>
             <DxItem item-type="simple" data-field="columnWidth" editor-type="dxNumberBox"/>
-            <DxItem item-type="simple" data-field="dataSource" editor-type="dxTextBox"/>
+<!--            <DxItem item-type="simple" data-field="dataSource" editor-type="dxTextBox"/>-->
             <DxItem item-type="simple" data-field="dateSerializationFormat" editor-type="dxTextBox"/>
             <DxItem item-type="simple" data-field="disabled" editor-type="dxCheckBox"/>
 
@@ -302,6 +296,20 @@
             <DxItem item-type="simple" data-field="wordWrapEnabled" editor-type="dxCheckBox"/>
           </DxForm>
         </div>
+        <DxTreeView
+            ref="treeview"
+            :data-source = "myTreeColumns"
+            selection-mode="single"
+            :select-by-click="true"
+            show-check-boxes-mode="none"
+            width="100%"
+            key-expr="name"
+            items-expr="columns"
+            display-expr="caption"
+            dataStructure="tree"
+            no-data-text="Колонки отсутствуют"
+            @item-click="selectItem"
+        />
         <DxButton
             width="100%"
             icon="preferences"
@@ -326,6 +334,8 @@
             <DxItem item-type="group" :visible="true" caption="Оформление колонки" :alignItemLabels="false" :col-count=1 >
               <DxItem item-type="simple" data-field='alignment' editor-type='dxSelectBox' :label= "{text: 'Выравнивание' }" :editor-options=" {items: [undefined, 'center', 'left', 'right']}"/>
               <DxItem item-type="simple" data-field='cellTemplate' editor-type="dxTextBox" :label= "{text: 'Шаблон ячейки' }"/>
+              <DxItem item-type="simple" data-field="cellTemplateFieldlist" editor-type='dxSelectBox' :label= "{text: 'Поля для ячейки' }"
+                      :editor-options= "{ onValueChanged: (e) => { cellTemplateItemsChange(e.value) }, searchEnabled: true, items: templateArrayList }"/>
               <DxItem item-type="simple" data-field='headerCellTemplate' :label= "{text: 'Шаблон заголовка' }"/>
               <DxItem item-type="simple" data-field='format' :label= "{text: 'Формат ячейки' }"
                       editor-type='dxSelectBox'
@@ -441,7 +451,7 @@
         <template #cell-template="{ data }">
           <collectionGridTemplate
               :template-data=data
-              :template-array="dataGridAttributes"
+              :template-array=data.column.cellTemplateFieldArray
           />
         </template>
       </DxDataGrid>
@@ -482,6 +492,12 @@ export default {
   computed: {
     fieldList: function() {
       return this.getDeepKeys(this.dataSource[0]);
+    },
+    dsList: function() {
+      return Object.keys(this.dataSourceList);
+    },
+    templateArrayList: function() {
+      return Object.keys(this.cellTemplateArrayList);
     }
   },
   mounted () {
@@ -501,16 +517,20 @@ export default {
     const menuItems = service.getmenuItems();
     const sales = service.getSales();
     const plan = service.getPlan();
+    const cellTemplateArrayList = service.getCellTemplateArrayList();
     const  defaultDS = [{}];
     return {
+      cellTemplateArrayList,
       defaultDS,
       menuItems,
       sales,
       plan,
+      dataSourceList: {"Default": defaultDS, "Menu": menuItems, "Sales": sales, "Plan": plan},
+      isColumns: false,
       isNotColumnSelect: true,
       globalIndex: 0,
       selectionColumn: null,
-      dataSource: sales,
+      dataSource: defaultDS,
       myColumns: [],
       myTreeColumns: [],
       myGrid: null,
@@ -520,18 +540,15 @@ export default {
       selectedTreeItem: undefined,
       selectByClickValue: true,
       openState: true,
-      buttonText: 'Параметры колонки',
-      dataGridAttributes: [[{field: "docNumber", width: 100, cellTemplate:""},
-                            {field: "docsNameKPM.name", width: 300, cellTemplate:"" },
-                            {field: "kpmForcesAndFacilitiesLink", width: 250, cellTemplate:"cellTemplate"},
-                            {field: "orgFoivDepartment.name", width: 100, cellTemplate:""}],
-                            [{field: "name", width: 70, cellTemplate:""},
-                             {field: "version", width: 170, cellTemplate:"" }]]
+      buttonText: 'Параметры колонки'
     };
   },
   methods: {
     myShow() {
-      console.log(this.getDeepKeys(this.sales[0]));
+      console.log(this.templateArrayList);
+      console.log(Object.keys(this.cellTemplateArrayList));
+      console.log(this.cellTemplateArrayList[this.templateArrayList[0]]);
+      console.log(this.myColumns);
     },
     findItemByKey(items, key) {
       for(let i = 0; i < items.length; i++) {
@@ -613,8 +630,9 @@ export default {
       this.myGrid.option('columns', this.myColumns);
       this.myTreeView.option('dataSource', this.myTreeColumns);
       this.myTreeView.expandAll();
+      this.isColumns = this.myColumns.length > 0;
     },
-    addNewColumn(parent, fieldName) {
+    NewColumn(parent, fieldName) {
       let g = {
         id: this.globalIndex,
         parentId: 0,
@@ -673,7 +691,8 @@ export default {
         validationRules: undefined,
         visible: true,
         visibleIndex: undefined,
-        width: undefined
+        width: undefined,
+        cellTemplateFieldArray: []
       };
       let t = {
         id: g.id,
@@ -694,13 +713,17 @@ export default {
         let treeParent = this.findItemByKey(this.myTreeColumns, parent.name);
         treeParent.columns.push(t);
       }
-      this.myGrid.option('columns', this.myColumns);
+    },
+    addNewColumn(parent, fieldName) {
+      this.NewColumn(parent, fieldName);
       this.globalIndex = this.globalIndex+1;
+      this.myGrid.option('columns', this.myColumns);
       this.myTreeView.option('dataSource', this.myTreeColumns);
       this.myTreeView.expandAll();
       if (this.selectionColumn) {
         this.myTreeView.selectItem(this.selectionColumn.name);
       }
+      this.isColumns = this.myColumns.length > 0;
     },
     showFormSetup() {
       this.myForm3.option('visible',  !this.myForm3.option('visible'));
@@ -744,6 +767,24 @@ export default {
       }
       return keys;
     },
+    dsChange(value) {
+      if (value) {
+        this.dataSource = this.dataSourceList[value]
+      } else {
+        this.dataSource = this.defaultDS
+      }
+    },
+    cellTemplateItemsChange(value) {
+      this.selectionColumn.cellTemplateFieldArray = this.cellTemplateArrayList[value]
+    },
+    columnsFromDatasource(grid) {
+      let cols = this.fieldList;
+      for(let i = 0; i < cols.length; i++) {
+        this.addNewColumn(null, cols[i]);
+      }
+      this.isColumns = this.myColumns.length > 0;
+      return grid.option('columns');
+    }
   }
 };
 </script>
