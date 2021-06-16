@@ -2,40 +2,40 @@
   <div>
     <DxToolbar>
       <ToolBarItem
-          :options="{ icon: 'menu', onClick: () => this.openState = !this.openState }"
+          :options="{ hint:'Скрыть/открыть панель параметров.', icon: 'menu', onClick: () => this.openState = !this.openState }"
           location="before"
           widget="dxButton"
       />
       <ToolBarItem
-          :options="{ icon: 'menu', onClick: () => this.myShow() }"
+          :options="{ hint:'Временная кнопка для вывода всякой всячины.', icon: 'menu', onClick: () => this.myShow() }"
+          location="after"
+          widget="dxButton"
+      />
+      <ToolBarItem
+          :options="{ hint:'Добавить колонку.', icon: 'insertcolumnleft', onClick: () => this.addNewColumn(null, undefined) }"
           location="before"
           widget="dxButton"
       />
       <ToolBarItem
-          :options="{ icon: 'insertcolumnleft', onClick: () => this.addNewColumn(null, undefined) }"
-          location="before"
-          widget="dxButton"
-      />
-      <ToolBarItem
-          :options="{ icon: 'insertcolumnright', onClick: () => this.addNewColumn(this.findItemByKey(this.myColumns, this.selectionColumn.name), undefined) }"
-          location="before"
-          widget="dxButton"
-          :disabled="isNotColumnSelect"
-      />
-      <ToolBarItem
-          :options="{ icon: 'deletecolumn', onClick: () => this.deleteColumn(this.selectionColumn)}"
+          :options="{ hint:'Добавить подчиненную колонку.', icon: 'insertcolumnright', onClick: () => this.addNewColumn(this.findItemByKey(this.myColumns, this.selectionColumn.name), undefined) }"
           location="before"
           widget="dxButton"
           :disabled="isNotColumnSelect"
       />
       <ToolBarItem
-          :options="{ icon: 'deletetable', onClick: () => this.deleteAllColumn()}"
+          :options="{ hint:'Удалить колонку.', icon: 'deletecolumn', onClick: () => this.deleteColumn(this.selectionColumn)}"
+          location="before"
+          widget="dxButton"
+          :disabled="isNotColumnSelect"
+      />
+      <ToolBarItem
+          :options="{ hint:'Удалить все колонки.', icon: 'deletetable', onClick: () => this.deleteAllColumn()}"
           location="before"
           widget="dxButton"
           :disabled="!isColumns"
       />
       <ToolBarItem
-          :options="{ icon: 'inserttable', onClick: () => this.popupVisible = true }"
+          :options="{ hint:'Создать колонки на основе источника данных.', icon: 'inserttable', onClick: () => this.popupVisible = true }"
           location="before"
           widget="dxButton"
           :disabled="isColumns"
@@ -431,6 +431,7 @@
           :data-source="dataSource"
           @context-menu-preparing="addMenuItems"
           @cell-click="gridCellClick"
+          @option-changed="gridOptionChanged"
       >
         <DxEditing
             :allow-updating="false"
@@ -567,6 +568,7 @@ export default {
       menuItems,
       sales,
       plan,
+      tmpOption: {},
       dataSourceList: {"Default": defaultDS, "Menu": menuItems, "Sales": sales, "Plan": plan},
       isColumns: false,
       isNotColumnSelect: true,
@@ -609,8 +611,9 @@ export default {
 //      console.log(Object.keys(this.cellTemplateArrayList));
 //      console.log(this.cellTemplateArrayList[this.templateArrayList[0]]);
 //      console.log(this.selectedItems);
-      console.log(this.selectedItems);
-
+      console.log(this.myGrid.option());
+      this.tmpOption=this.myGrid.option();
+      console.log(this.myGrid.option());
     },
     findItemByKey(items, key) {
       for(let i = 0; i < items.length; i++) {
@@ -769,7 +772,8 @@ export default {
         parentId: g.parentId,
         name: g.name,
         caption: g.caption,
-        columns: []
+        columns: [],
+        icon: 'file'
       }
       if (parent === null) {
         this.myColumns.push(g);
@@ -779,8 +783,10 @@ export default {
         g.ownerBand = parent.index;
         g.ownerName = parent.name;
         parent.columns.push(g);
+        t.icon = 'file'
         t.parentId = g.parentId;
         let treeParent = this.findItemByKey(this.myTreeColumns, parent.name);
+        treeParent.icon = 'activefolder';
         treeParent.columns.push(t);
       }
       this.globalIndex = this.globalIndex+1;
@@ -823,6 +829,32 @@ export default {
 //        console.log('grid - '+ e.dataField + ' = '+e.value);
         this.myGrid.option(e.dataField, e.value);
         this.myGrid.repaint();
+      }
+    },
+    gridOptionChanged(e) {
+      if (e.fullName.includes(".visibleIndex")) {
+        console.log('name- ' + e.name + ' = ' + e.value);
+        console.log('fullName - ' + e.fullName + ' = ' + e.value);
+        let path = e.fullName.substr(0, e.fullName.length - 13);
+        console.log(path);
+        let count = (path.split('[').length - 1)
+        console.log('Количество уровней = '+ count);
+        let index = path.substr(8, 1);
+        console.log('Индекс массива = '+ index);
+        let tmpArray = [];
+        tmpArray = this.myColumns[index];
+        console.log(tmpArray);
+        let i = 1;
+        while (i < count) {
+          let index = path.substr(8+i*11, 1);
+          console.log('Индекс массива = '+ index);
+          tmpArray = tmpArray.columns[index];
+          console.log(tmpArray);
+          i = i+1;
+        }
+
+        console.log(this.myColumns);
+
       }
     },
     getDeepKeys(obj) {
