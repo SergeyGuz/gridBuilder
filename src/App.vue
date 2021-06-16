@@ -29,7 +29,13 @@
           :disabled="isNotColumnSelect"
       />
       <ToolBarItem
-          :options="{ icon: 'inserttable', onClick: () => this.columnsFromDatasource(this.myGrid)}"
+          :options="{ icon: 'deletetable', onClick: () => this.deleteAllColumn()}"
+          location="before"
+          widget="dxButton"
+          :disabled="!isColumns"
+      />
+      <ToolBarItem
+          :options="{ icon: 'inserttable', onClick: () => this.popupVisible = true }"
           location="before"
           widget="dxButton"
           :disabled="isColumns"
@@ -457,17 +463,38 @@
       </DxDataGrid>
     </div>
     </DxDrawer>
-<!--
     <DxPopup
-        :width="600"
-        :height="400"
-        :title="Выберите колонки:"
+        :title="popupTitle"
+        :resizeEnabled="false"
+        :drag-enabled="true"
+        :show-close-button="false"
+        :close-on-outside-click="true"
+        :width="400"
+        :height="640"
         :visible="popupVisible"
     >
+      <DxList
+        :data-source="fieldList"
+        :show-selection-controls="true"
+        no-data-text="Отсутствуют колонки, видимо не выбран источник данных."
+        selection-mode="all"
+        :height="500"
+        @option-changed="listOptionChanged"
+      />
+      <DxToolbarItem
+          widget="dxButton"
+          toolbar="bottom"
+          location="before"
+          :options="createColumnOptions"
+      />
+      <DxToolbarItem
+          widget="dxButton"
+          toolbar="bottom"
+          location="after"
+          :options="closeButtonOptions"
+      />
 
     </DxPopup>
--->
-
   </div>
 </template>
 <script>
@@ -487,6 +514,8 @@ import {DxDataGrid,
         DxSorting,
         DxEditing } from 'devextreme-vue/data-grid';
 import DxTreeView from 'devextreme-vue/tree-view';
+import { DxList } from 'devextreme-vue/list';
+import { DxPopup, DxToolbarItem  } from 'devextreme-vue/popup';
 import collectionGridTemplate from './collectionGridTemplate.vue';
 
 import service from './data.js';
@@ -498,6 +527,8 @@ export default {
     DxForm, DxButton, DxTagBox, DxItem,
     DxDataGrid, DxColumn, DxGrouping, DxGroupPanel, DxPager, DxPaging, DxSearchPanel, DxColumnChooser, DxSorting, DxEditing,
     DxTreeView,
+    DxList,
+    DxPopup, DxToolbarItem,
     collectionGridTemplate
   },
   computed: {
@@ -539,7 +570,7 @@ export default {
       dataSourceList: {"Default": defaultDS, "Menu": menuItems, "Sales": sales, "Plan": plan},
       isColumns: false,
       isNotColumnSelect: true,
-      globalIndex: 0,
+      globalIndex: 1,
       selectionColumn: null,
       dataSource: defaultDS,
       myColumns: [],
@@ -551,15 +582,35 @@ export default {
       selectedTreeItem: undefined,
       selectByClickValue: true,
       openState: true,
-      buttonText: 'Параметры колонки'
+      buttonText: 'Параметры колонки',
+      popupVisible: false,
+      popupTitle: 'Выберите колонки',
+      selectedItems: [],
+      createColumnOptions: {
+        icon: 'inserttable',
+        text: 'Создать',
+        onClick: () => {
+          this.columnsFromDatasource();
+          this.popupVisible = false;
+        }
+      },
+      closeButtonOptions: {
+        icon: 'close',
+        text: 'Отменить',
+        onClick: () => {
+          this.popupVisible = false;
+        }
+      },
     };
   },
   methods: {
     myShow() {
-      console.log(this.templateArrayList);
-      console.log(Object.keys(this.cellTemplateArrayList));
-      console.log(this.cellTemplateArrayList[this.templateArrayList[0]]);
-      console.log(this.myColumns);
+//      console.log(this.templateArrayList);
+//      console.log(Object.keys(this.cellTemplateArrayList));
+//      console.log(this.cellTemplateArrayList[this.templateArrayList[0]]);
+//      console.log(this.selectedItems);
+      console.log(this.selectedItems);
+
     },
     findItemByKey(items, key) {
       for(let i = 0; i < items.length; i++) {
@@ -643,6 +694,14 @@ export default {
       this.myTreeView.expandAll();
       this.isColumns = this.myColumns.length > 0;
     },
+    deleteAllColumn() {
+      this.myColumns=[];
+      this.myGrid.option('columns', this.myColumns);
+      this.myTreeColumns=[];
+      this.myTreeView.option('dataSource', this.myTreeColumns);
+      this.isColumns = this.myColumns.length > 0;
+      this.globalIndex = 1;
+    },
     NewColumn(parent, fieldName) {
       let g = {
         id: this.globalIndex,
@@ -724,16 +783,26 @@ export default {
         let treeParent = this.findItemByKey(this.myTreeColumns, parent.name);
         treeParent.columns.push(t);
       }
+      this.globalIndex = this.globalIndex+1;
     },
     addNewColumn(parent, fieldName) {
       this.NewColumn(parent, fieldName);
-      this.globalIndex = this.globalIndex+1;
       this.myGrid.option('columns', this.myColumns);
       this.myTreeView.option('dataSource', this.myTreeColumns);
       this.myTreeView.expandAll();
       if (this.selectionColumn) {
         this.myTreeView.selectItem(this.selectionColumn.name);
       }
+      this.isColumns = this.myColumns.length > 0;
+    },
+    columnsFromDatasource() {
+      let cols = this.selectedItems;
+      for(let i = 0; i < cols.length; i++) {
+        this.NewColumn(null, cols[i]);
+      }
+      this.myGrid.option('columns', this.myColumns);
+      this.myTreeView.option('dataSource', this.myTreeColumns);
+      this.myTreeView.expandAll();
       this.isColumns = this.myColumns.length > 0;
     },
     showFormSetup() {
@@ -744,14 +813,14 @@ export default {
     },
     formFieldDataChanged(e) {
       if (this.selectionColumn !== null && e.component === this.myForm2 && this.myGrid.columnOption(this.selectionColumn.name, e.dataField) !== e.value) {
-        console.log('column - '+ e.dataField + ' = '+e.value);
+//        console.log('column - '+ e.dataField + ' = '+e.value);
         this.findItemByKey(this.myColumns, this.selectionColumn.name)[e.dataField] = e.value;
         if (e.dataField === 'caption') {this.findItemByKey(this.myTreeColumns, this.selectionColumn.name)[e.dataField] = e.value}
         this.myGrid.option('columns', this.myColumns);
         this.myTreeView.option('dataSource', this.myTreeColumns);
       }
       if (e.component === this.myForm3) {
-        console.log('grid - '+ e.dataField + ' = '+e.value);
+//        console.log('grid - '+ e.dataField + ' = '+e.value);
         this.myGrid.option(e.dataField, e.value);
         this.myGrid.repaint();
       }
@@ -788,13 +857,10 @@ export default {
     cellTemplateItemsChange(value) {
       this.selectionColumn.cellTemplateFieldArray = this.cellTemplateArrayList[value]
     },
-    columnsFromDatasource(grid) {
-      let cols = this.fieldList;
-      for(let i = 0; i < cols.length; i++) {
-        this.addNewColumn(null, cols[i]);
+    listOptionChanged(e) {
+      if (e.name === "selectedItems") {
+        this.selectedItems=e.value;
       }
-      this.isColumns = this.myColumns.length > 0;
-      return grid.option('columns');
     }
   }
 };
