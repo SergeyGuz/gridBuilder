@@ -684,6 +684,7 @@ export default {
         parent.columns.splice(itemIndex, 1);
         parent = this.findItemByKey(this.myTreeColumns, column.ownerName);
         parent.columns.splice(itemIndex, 1);
+        if (parent.columns) { parent.icon = 'file'}
       } else {
         let itemIndex = this.myColumns.findIndex(el => el.name === column.name);
         this.myColumns.splice(itemIndex, 1);
