@@ -341,7 +341,7 @@
               <DxItem item-type="simple" data-field='alignment' editor-type='dxSelectBox' :label= "{text: 'Выравнивание' }" :editor-options=" {items: [undefined, 'center', 'left', 'right']}"/>
               <DxItem item-type="simple" data-field='cellTemplate' editor-type="dxTextBox" :label= "{text: 'Шаблон ячейки' }"/>
               <DxItem item-type="simple" data-field="cellTemplateFieldlist" editor-type='dxSelectBox' :label= "{text: 'Поля для ячейки' }"
-                      :editor-options= "{ onValueChanged: (e) => { cellTemplateItemsChange(e.value) }, searchEnabled: true, items: templateArrayList }"/>
+                      :editor-options= "{ onValueChanged: (e) => { cellTemplateItemsChange(e) }, searchEnabled: true, items: templateArrayList }"/>
               <DxItem item-type="simple" data-field='headerCellTemplate' :label= "{text: 'Шаблон заголовка' }"/>
               <DxItem item-type="simple" data-field='format' :label= "{text: 'Формат ячейки' }"
                       editor-type='dxSelectBox'
@@ -611,9 +611,10 @@ export default {
 //      console.log(Object.keys(this.cellTemplateArrayList));
 //      console.log(this.cellTemplateArrayList[this.templateArrayList[0]]);
 //      console.log(this.selectedItems);
-      console.log(this.myGrid.option());
-      this.tmpOption=this.myGrid.option();
-      console.log(this.myGrid.option());
+//      console.log(this.myGrid.option());
+//      this.tmpOption=this.myGrid.option();
+//      console.log(this.myGrid.option());
+      console.log(Object.keys(this.myColumns));
     },
     findItemByKey(items, key) {
       for(let i = 0; i < items.length; i++) {
@@ -833,29 +834,47 @@ export default {
     },
     gridOptionChanged(e) {
       if (e.fullName.includes(".visibleIndex")) {
-        console.log('name- ' + e.name + ' = ' + e.value);
-        console.log('fullName - ' + e.fullName + ' = ' + e.value);
         let path = e.fullName.substr(0, e.fullName.length - 13);
-        console.log(path);
         let count = (path.split('[').length - 1)
-        console.log('Количество уровней = '+ count);
         let index = path.substr(8, 1);
-        console.log('Индекс массива = '+ index);
-        let tmpArray = [];
-        tmpArray = this.myColumns[index];
-        console.log(tmpArray);
+        let tmpFrom = this.myColumns[index];
         let i = 1;
         while (i < count) {
-          let index = path.substr(8+i*11, 1);
-          console.log('Индекс массива = '+ index);
-          tmpArray = tmpArray.columns[index];
-          console.log(tmpArray);
+          index = path.substr(8+i*11, 1);
+          tmpFrom = tmpFrom.columns[index];
           i = i+1;
         }
-
-        console.log(this.myColumns);
-
+        if (count === 1) {
+          this.array_move(this.myColumns, index, e.value);
+          this.myGrid.option('columns', this.myColumns);
+          this.array_move(this.myTreeColumns, index, e.value);
+          this.myTreeView.option('dataSource', this.myTreeColumns);
+        } else {
+          let parent = this.findItemByKey(this.myColumns, tmpFrom.ownerName);
+          this.array_move(parent.columns, index, e.value);
+          this.myGrid.option('columns', this.myColumns);
+          parent = this.findItemByKey(this.myTreeColumns, tmpFrom.ownerName);
+          this.array_move(parent.columns, index, e.value);
+          this.myTreeView.option('dataSource', this.myTreeColumns);
+        }
+        this.myTreeView.expandAll();
+        this.isColumns = this.myColumns.length > 0;
       }
+    },
+    array_move(arr, old_index, new_index) {
+      while (old_index < 0) {
+        old_index += arr.length;
+      }
+      while (new_index < 0) {
+        new_index += arr.length;
+      }
+      if (new_index >= arr.length) {
+        var k = new_index - arr.length + 1;
+        while (k--) {
+          arr.push(undefined);
+        }
+      }
+      arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
     },
     getDeepKeys(obj) {
       let keys = [];
@@ -886,8 +905,10 @@ export default {
         this.dataSource = this.defaultDS
       }
     },
-    cellTemplateItemsChange(value) {
-      this.selectionColumn.cellTemplateFieldArray = this.cellTemplateArrayList[value]
+    cellTemplateItemsChange(e) {
+      if (e.value) {
+        this.selectionColumn.cellTemplateFieldArray = this.cellTemplateArrayList[e.value];
+      }
     },
     listOptionChanged(e) {
       if (e.name === "selectedItems") {
