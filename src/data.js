@@ -995,12 +995,18 @@ const sales = [
     ];
 
 const cellTemplateArrayList = {
-    saleAttributes: [[{field: "docNumber", width: 100, cellTemplate:""},
-        {field: "docsNameKPM.name", width: 300, cellTemplate:"" },
-        {field: "kpmForcesAndFacilitiesLink", width: 250, cellTemplate:"cellTemplate"},
-        {field: "orgFoivDepartment.name", width: 100, cellTemplate:""}],
-        [{field: "name", width: 70, cellTemplate:""},
-            {field: "version", width: 170, cellTemplate:"" }]],
+    saleAttributes: [
+        [
+            {field: "docNumber", width: 100, cellTemplate:""},
+            {field: "docsNameKPM.name", width: 300, cellTemplate:"" },
+            {field: "kpmForcesAndFacilitiesLink", width: 250, cellTemplate:"cellTemplate"},
+            {field: "orgFoivDepartment.name", width: 100, cellTemplate:""}
+        ],
+        [
+            {field: "name", width: 70, cellTemplate:""},
+            {field: "version", width: 170, cellTemplate:"" }
+        ]
+    ],
     planAttributes: [[{field: "version", width: 160, cellTemplate:""},
         {field: "reportingYear", width: 70, cellTemplate:"" },
         {field: "planPeriodAllLink.name", width: 200, cellTemplate:""},

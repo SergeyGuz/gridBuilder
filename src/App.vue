@@ -40,6 +40,13 @@
           widget="dxButton"
           :disabled="isColumns"
       />
+      <ToolBarItem
+          location="before"
+          widget="dxDropDownButton"
+          :options="{ splitButton:true, items: columnList, text: getDropButtonText, icon:'checklist', displayExpr:'caption',
+                      keyExpr:'name', useSelectMode: false, stylingMode: 'text',
+                      onItemClick: (e) => { this.selectItem(e) } }"
+      />
     </DxToolbar>
     <DxDrawer
         :opened= "openState"
@@ -64,6 +71,7 @@
               :scrollingEnabled="true"
               @field-data-changed="formFieldDataChanged"
           >
+            <DxDropDownButton :visible='false' />
             <DxTagBox :visible='false'/>
             <DxItem item-type="simple" data-field="dataSourceList" editor-type='dxSelectBox' :label= "{text: 'Источник данных' }"
                     :editor-options= "{ onValueChanged: (e) => { dsChange(e.value) }, searchEnabled: true,items: dsList}"/>
@@ -449,7 +457,7 @@
         <DxSearchPanel :visible="true"/>
         <DxGrouping :auto-expand-all="false"/>
         <DxColumnChooser :enabled="true"/>
-        <DxSorting mode="none"/>
+        <DxSorting mode="multiple"/>
         <template #header-cell-template="{ data }">
           <div class="cell-highlighted">
             {{ data.column.caption }}
@@ -517,6 +525,7 @@ import {DxDataGrid,
 import DxTreeView from 'devextreme-vue/tree-view';
 import { DxList } from 'devextreme-vue/list';
 import { DxPopup, DxToolbarItem  } from 'devextreme-vue/popup';
+import DxDropDownButton from 'devextreme-vue/drop-down-button';
 import collectionGridTemplate from './collectionGridTemplate.vue';
 
 import service from './data.js';
@@ -530,9 +539,22 @@ export default {
     DxTreeView,
     DxList,
     DxPopup, DxToolbarItem,
+    DxDropDownButton,
     collectionGridTemplate
   },
   computed: {
+    getDropButtonText: function() {
+      if (this.selectionColumn) {
+        return this.selectionColumn.caption;
+      } else {
+        return 'Выберите колонку ...';
+      }
+    },
+    columnList: function() {
+      let list = [];
+      this.getColumnList(this.myColumns, list);
+      return list;
+    },
     fieldList: function() {
       return this.getDeepKeys(this.dataSource[0]);
     },
@@ -602,7 +624,7 @@ export default {
         onClick: () => {
           this.popupVisible = false;
         }
-      },
+      }
     };
   },
   methods: {
@@ -611,10 +633,10 @@ export default {
 //      console.log(Object.keys(this.cellTemplateArrayList));
 //      console.log(this.cellTemplateArrayList[this.templateArrayList[0]]);
 //      console.log(this.selectedItems);
-//      console.log(this.myGrid.option());
+      console.log(this.columnList);
 //      this.tmpOption=this.myGrid.option();
 //      console.log(this.myGrid.option());
-      console.log(Object.keys(this.myColumns));
+//      console.log(Object.keys(this.myColumns));
     },
     findItemByKey(items, key) {
       for(let i = 0; i < items.length; i++) {
@@ -659,6 +681,26 @@ export default {
     addMenuItems(e) {
       if (e.target === 'header') {
         if (!e.items) e.items = [];
+        e.items.push({
+          beginGroup: true,
+          text: 'Выбрать колонку',
+          icon: 'check',
+          onItemClick: () => {
+            if (this.selectionColumn !== null) {
+              this.selectionColumn.headerCellTemplate = undefined;
+              this.myGrid.columnOption(this.selectionColumn.name, 'headerCellTemplate', undefined);
+              console.log(this.selectionColumn.headerCellTemplate);
+            }
+            this.selectionColumn = e.column;
+            this.myForm2.option('formData', this.selectionColumn);
+            this.selectionColumn.headerCellTemplate = 'header-cell-template';
+            this.buttonText = this.selectionColumn.caption;
+            this.myGrid.option('columns', this.myColumns);
+            this.myTreeView.selectItem(this.selectionColumn.name);
+            this.isNotColumnSelect = false;
+            this.myTreeView.expandAll();
+          }
+        });
         e.items.push({
           beginGroup: true,
           text: 'Добавить колонку',
@@ -775,17 +817,17 @@ export default {
         name: g.name,
         caption: g.caption,
         columns: [],
-        icon: 'file'
+        icon: 'columnfield'
       }
       if (parent === null) {
         this.myColumns.push(g);
         this.myTreeColumns.push(t);
       } else {
         parent.isBand = true;
-        g.ownerBand = parent.index;
+        g.ownerBand = parent;
         g.ownerName = parent.name;
         parent.columns.push(g);
-        t.icon = 'file'
+        t.icon = 'columnfield'
         t.parentId = g.parentId;
         let treeParent = this.findItemByKey(this.myTreeColumns, parent.name);
         treeParent.icon = 'activefolder';
@@ -898,6 +940,29 @@ export default {
         }
       }
       return keys;
+    },
+    getColumnList(sourse, target) {
+      for(let i = 0; i < sourse.length; i++) {
+        let item = {
+          id: sourse[i].id,
+          parentName: sourse[i].ownerName,
+          name: sourse[i].name,
+          caption: sourse[i].caption,
+          icon: 'columnfield',
+          isBand: false
+        }
+        if (sourse[i].isBand) {
+          item.icon = 'activefolder';
+          item.isBand = true;
+        }
+        if (item.parentName) {
+          item.icon = 'minus';
+        }
+        target.push(item);
+        if (sourse[i].columns) {
+          this.getColumnList(sourse[i].columns, target);
+        }
+      }
     },
     dsChange(value) {
       if (value) {
