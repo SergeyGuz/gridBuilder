@@ -5,6 +5,7 @@
         :show-borders="false"
         :showColumnHeaders="false"
         :showRowLines="true"
+        :rowAlternationEnabled="false"
         :column-auto-width="false"
         :wordWrapEnabled="true"
         :visible="true"
@@ -21,6 +22,7 @@
               :show-borders="false"
               :showColumnHeaders="false"
               :showRowLines="true"
+              :rowAlternationEnabled="false"
               :column-auto-width="false"
               :wordWrapEnabled="true"
               :visible="true"
@@ -61,4 +63,5 @@ export default {
 };
 </script>
 <style>
+
 </style>
