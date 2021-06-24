@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="titul-container">
-      <div class="dx-field">
-        <div class="dx-field-label">Настройки таблицы:</div>
-        <div class="dx-field-value">
+      <div class="option">
+        <span>Настройки таблицы:</span>
+        <div class="btn">
           <DxButton
-              id="viewbtn"
+              id="viewbtn2"
               :icon="buttonIcon"
               @click="formView"
           />
@@ -296,7 +296,7 @@ export default {
     },
     height: {
       type: Number,
-      default: () => (800)
+      default: () => (window.innerHeight - 190)
     }
   },
   data() {
@@ -322,6 +322,10 @@ export default {
 };
 </script>
 <style scoped>
+.dx-form-group-caption {
+  font-size: 16px;
+}
+
 .titul-container {
   margin: 10px 5px 5px;
   padding: 2px;
@@ -329,11 +333,28 @@ export default {
   box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
 }
 
-.dx-field > .dx-field-label {
+.option {
+  margin-bottom: 12px;
+  font-size: medium;
+}
+
+.option > .btn {
+  float: right;
+}
+
+.option > span {
+  position: relative;
+  margin-right: 10px;
   font-weight: bold;
-  font-size: 115%;
   color: #051672;
 }
+
+.option > div {
+  display: inline-block;
+  font-weight: bold;
+  color: brown;
+}
+
 
 </style>
 

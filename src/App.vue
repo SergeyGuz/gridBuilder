@@ -2,11 +2,6 @@
   <div>
     <DxToolbar>
       <ToolBarItem
-          :options="{ hint:'Скрыть/открыть панель параметров.', icon: 'menu', onClick: () => this.openState = !this.openState }"
-          location="before"
-          widget="dxButton"
-      />
-      <ToolBarItem
           :options="{ hint:'Временная кнопка для вывода всякой всячины.', icon: 'menu', onClick: () => this.myShow() }"
           location="after"
           widget="dxButton"
@@ -43,7 +38,7 @@
       />
       <ToolBarItem
           :options="{ text:'Выбрать',  hint:'Выбрать колонку для настройки', icon: 'bulletlist',
-                      onClick: () => { this.colList= this.columnList(); this.selectionMode = 'single'; this.popupTitle = 'Выберите колонку'; this.popupVisible = true } }"
+                      onClick: () => { this.colList= columnList; this.selectionMode = 'single'; this.popupTitle = 'Выберите колонку'; this.popupVisible = true } }"
           location="before"
           widget="dxButton"
           :disabled=false
@@ -55,83 +50,92 @@
           :disabled=false
       />
     </DxToolbar>
-    <DxDrawer
-        :opened= "openState"
-        :close-on-outside-click="false"
-        template="GridOptions"
-    >
-    <template #GridOptions>
-      <div class="container">
-        <div class="form-container2">
-          <formGridOptions
-              :data="formGridOptionsData"
-              :grid="myGrid"
-              :height="760"
-          />
-          <formColumnOptions
-              :data="formColumnOptionsData"
-              :grid="myGrid"
-              :selectionColumn="selectionColumn"
-              :myColumns="myColumns"
-              :fieldList="fieldList"
-              :height="760"
-          />
-        </div>
-      </div>
-    </template>
-    <div class="grid-container">
-      <DxDataGrid
-          id="grid"
-          :visible="false"
-      >
-        <DxColumn
-            data-field="dataField"
-        />
-      </DxDataGrid>
-      <DxDataGrid
-          id="my-grid"
-          ref="grid"
-          :show-borders="true"
-          :allow-column-reordering="true"
-          :allow-column-resizing="true"
-          :column-auto-width="true"
-          :data-source="dataSource"
-          @context-menu-preparing="addMenuItems"
-          @cell-click="gridCellClick"
-          @option-changed="gridOptionChanged"
-          @cell-prepared="onCellPrepared"
-      >
-        <DxEditing
-            :allow-updating="false"
-            :allow-deleting="false"
-            :allow-adding="false"
-            mode="form"
-        />
-        <DxPaging :page-size="5"/>
-        <DxPager
-            :show-page-size-selector="true"
-            :allowed-page-sizes="[5, 20, 30]"
-            :show-info="true"
-        />
-        <DxGroupPanel :visible="true"/>
-        <DxSearchPanel :visible="true"/>
-        <DxGrouping :auto-expand-all="false"/>
-        <DxColumnChooser :enabled="true"/>
-        <DxSorting mode="multiple"/>
-        <template #header-cell-template="{ data }">
-          <div class="cell-highlighted">
-            {{ data.column.caption }}
+  <DxResponsiveBox
+    :height = "boxHeight"
+  >
+    <DxRow :ratio="0"/>
+    <DxRow :ratio="2"/>
+    <DxCol :ratio="1"/>
+    <DxCol :ratio="4"/>
+    <DxItem>
+      <DxLocation :row="1" :col="0"/>
+      <template #default>
+        <div class="container">
+          <div class="form-container2">
+            <formGridOptions
+                :data="formGridOptionsData"
+                :grid="myGrid"
+            />
+            <formColumnOptions
+                :data="formColumnOptionsData"
+                :grid="myGrid"
+                :selectionColumn="selectionColumn"
+                :myColumns="myColumns"
+                :fieldList="fieldList"
+            />
           </div>
-        </template>
-        <template #cell-template="{ data }">
-          <collectionGridTemplate
-              :template-data=data
-              :template-array=data.column.cellTemplateFieldArray
-          />
-        </template>
-      </DxDataGrid>
-    </div>
-    </DxDrawer>
+        </div>
+      </template>
+    </DxItem>
+    <DxItem>
+      <DxLocation :row="1" :col="1"/>
+      <template #default>
+        <div class="grid-container">
+          <DxDataGrid
+              id="grid"
+              :visible="false"
+          >
+            <DxColumn
+                data-field="dataField"
+            />
+          </DxDataGrid>
+          <DxDataGrid
+              id="my-grid"
+              ref="grid"
+              :show-borders="true"
+              :allow-column-reordering="true"
+              :allow-column-resizing="true"
+              :column-auto-width="true"
+              :data-source="dataSource"
+              @context-menu-preparing="addMenuItems"
+              @cell-click="gridCellClick"
+              @option-changed="gridOptionChanged"
+              @cell-prepared="onCellPrepared"
+          >
+            <DxEditing
+                :allow-updating="false"
+                :allow-deleting="false"
+                :allow-adding="false"
+                mode="form"
+            />
+            <DxPaging :page-size="5"/>
+            <DxPager
+                :show-page-size-selector="true"
+                :allowed-page-sizes="[5, 20, 30]"
+                :show-info="true"
+            />
+            <DxGroupPanel :visible="true"/>
+            <DxSearchPanel :visible="true"/>
+            <DxGrouping :auto-expand-all="false"/>
+            <DxColumnChooser :enabled="true"/>
+            <DxSorting mode="multiple"/>
+            <DxRemoteOperations :group-paging="true" />
+            <template #header-cell-template="{ data }">
+              <div class="cell-highlighted">
+                {{ data.column.caption }}
+              </div>
+            </template>
+            <template #cell-template="{ data }">
+              <collectionGridTemplate
+                  :template-data=data
+                  :template-array=data.column.cellTemplateFieldArray
+              />
+            </template>
+          </DxDataGrid>
+        </div>
+      </template>
+    </DxItem>
+  </DxResponsiveBox>
     <DxPopup
         :title="popupTitle"
         :resizeEnabled="true"
@@ -180,7 +184,6 @@
 </template>
 <script>
 import DxToolbar, { DxItem as ToolBarItem } from 'devextreme-vue/toolbar';
-import DxDrawer from 'devextreme-vue/drawer';
 import {DxDataGrid,
         DxColumn,
         DxGrouping,
@@ -190,21 +193,24 @@ import {DxDataGrid,
         DxSearchPanel,
         DxColumnChooser,
         DxSorting,
-        DxEditing } from 'devextreme-vue/data-grid';
+        DxEditing,
+        DxRemoteOperations} from 'devextreme-vue/data-grid';
 import { DxList } from 'devextreme-vue/list';
 import { DxPopup, DxToolbarItem  } from 'devextreme-vue/popup';
+import { DxResponsiveBox, DxItem, DxLocation, DxCol, DxRow } from 'devextreme-vue/responsive-box';
 import collectionGridTemplate from './components/collectionGridTemplate.vue';
 import formGridOptions from './components/formGridOptions.vue';
 import formColumnOptions from './components/formColumnOptions.vue';
-import service from './components/data.js';
+import service from './data.js';
+//import CustomStore from 'devextreme/data/custom_store';
 
 export default {
   components: {
     DxToolbar, ToolBarItem,
-    DxDrawer,
-    DxDataGrid, DxColumn, DxGrouping, DxGroupPanel, DxPager, DxPaging, DxSearchPanel, DxColumnChooser, DxSorting, DxEditing,
+    DxDataGrid, DxColumn, DxGrouping, DxGroupPanel, DxPager, DxPaging, DxSearchPanel, DxColumnChooser, DxSorting, DxEditing, DxRemoteOperations,
     DxList,
     DxPopup, DxToolbarItem,
+    DxResponsiveBox, DxItem, DxLocation, DxCol, DxRow,
     collectionGridTemplate,
     formGridOptions,
     formColumnOptions
@@ -212,6 +218,11 @@ export default {
   computed: {
     fieldList: function() {
       return this.getDeepKeys(this.dataSource[0]);
+    },
+    columnList: function() {
+      let list = [];
+      this.getColumnList(this.myColumns, list);
+      return list;
     }
   },
   mounted () {
@@ -239,21 +250,20 @@ export default {
       myGrid: null,
       formColumnOptions: null,
       formGridOptions: null,
-      openState: true,
       popupVisible: false,
       popupTitle: 'Выберите колонки',
       selectedItems: [],
       selectionMode: "all",
       colList: [],
       formGridOptionsData: {},
-      formColumnOptionsData: {}
+      formColumnOptionsData: {},
+      boxHeight: function() { return window.innerHeight - 60}
     };
   },
   methods: {
     myShow() {
-//      this.tmpOption=this.myGrid.option();
-//      console.log(this.myColumns);
-      this.formGridOptionsData = this.myGrid.option();
+      // this.tmpOption=this.myGrid.option();
+      console.log(this.myGrid.option('columns'));
     },
     gridCellClick(e) {
       if (e.rowType === 'header') {
@@ -451,7 +461,7 @@ export default {
         new_index += arr.length;
       }
       if (new_index >= arr.length) {
-        var k = new_index - arr.length + 1;
+        let k = new_index - arr.length + 1;
         while (k--) {
           arr.push(undefined);
         }
@@ -461,12 +471,12 @@ export default {
     getDeepKeys(obj) {
       let keys = [];
       for(let key in obj) {
-        if(typeof obj[key] === "object" && !Array.isArray(obj[key])) {
-          let subkeys = this.getDeepKeys(obj[key]);
+        if(typeof obj.key === "object" && !Array.isArray(obj.key)) {
+          let subkeys = this.getDeepKeys(obj.key);
           keys = keys.concat(subkeys.map(function(subkey) {
             return key + "." + subkey;
           }));
-        } else if(Array.isArray(obj[key])) {
+        } else if(Array.isArray(obj.key)) {
           // for(let i=0;i<obj[key].length;i++){
           //   let subkeys = this.getDeepKeys(obj[key][i]);
           //   keys = keys.concat(subkeys.map(function(subkey) {
@@ -503,11 +513,6 @@ export default {
         }
       }
     },
-    columnList() {
-      let list = [];
-      this.getColumnList(this.myColumns, list);
-      return list;
-    },
     dsValueChanged (e) {
       if (e.value) {
         this.dataSource = e.value;
@@ -529,13 +534,8 @@ export default {
   padding: 5px 10px;
 }
 
-.dx-header-row .cell-highlighted {
-  color: red;
-  font-style: italic;
-}
-
 .container {
-  width: 500px;
+  border: 1px solid rgba(191, 191, 191, 0.25);
 }
 
 .grid-container {
@@ -551,7 +551,6 @@ export default {
   padding-bottom: 2px;
   padding-left: 10px;
   padding-right: 20px;
-  border: 1px solid rgba(191, 191, 191, 0.25);
 }
 
 </style>
